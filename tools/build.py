@@ -4,7 +4,7 @@ import pathlib, sys
 
 OUT = pathlib.Path(sys.argv[1])
 IMG = "https://e8usa8896fd.exactdn.com/wp-content/uploads"
-LOGO = IMG + "/2018/12/cropped-favicon-1.png?strip=all&resize=270%2C270"
+LOGO = "images/logo-mark.svg"
 
 ICON = {
  "phone": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg>',
@@ -76,7 +76,8 @@ def page(fname, title, desc, body):
 <meta name="robots" content="noindex, nofollow">
 <title>{title} · Abbott Family Chiropractic</title>
 <meta name="description" content="{desc}">
-<link rel="icon" href="{LOGO}">
+<link rel="icon" type="image/svg+xml" href="{LOGO}">
+<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&amp;family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&amp;display=swap" rel="stylesheet">
@@ -88,7 +89,7 @@ def page(fname, title, desc, body):
 <header class="site-header">
   <div class="wrap header-row">
     <a class="brand" href="index.html">
-      <img src="{LOGO}" alt="" width="52" height="52">
+      <img src="{LOGO}" alt="" width="52" height="56">
       <span><span class="brand-name">Abbott Family Chiropractic</span><span class="brand-sub">Hampton &amp; Gloucester, Virginia</span></span>
     </a>
     <button class="menu-btn" aria-expanded="false" aria-controls="site-nav">{ICON["menu"]}<span class="menu-label">Menu</span></button>
@@ -376,8 +377,9 @@ page("services.html", "Services", "Chiropractic, acupuncture, and massage therap
 ''')
 
 # ------------------------------------------------------------------ About
-def person(initials, name, role, bio):
-    return f'''<div class="card person"><div class="avatar" aria-hidden="true">{initials}</div>
+def person(initials, name, role, bio, photo=None):
+    pic = (f'<img src="{IMG}/2018/12/{photo}?strip=all" alt="{name}" loading="lazy" onerror="this.remove()">' if photo else "")
+    return f'''<div class="card person"><div class="avatar">{pic}<span aria-hidden="true">{initials}</span></div>
       <div><h3 style="margin-bottom:2px">{name}</h3><span class="role">{role}</span><p>{bio}</p></div></div>'''
 
 page("about.html", "About Us", "Meet the team at Abbott Family Chiropractic.", f'''
@@ -401,10 +403,10 @@ page("about.html", "About Us", "Meet the team at Abbott Family Chiropractic.", f
   <div class="wrap">
     <div class="section-head"><h2>Meet the team</h2></div>
     <div class="grid-2">
-      {person("SC","Dr. Siobhan Conklyn","Chiropractor","Dr. Conklyn provides chiropractic and acupuncture care, with a gentle, respectful approach her patients often mention first.")}
-      {person("VR","Valeria Reynolds, LMT","Massage Therapist","With over ten years of experience, Valeria is trained in deep tissue, prenatal, and hot stone massage.")}
-      {person("JT","John Tango, LMT","Massage Therapist","An Army National Guard veteran, John has been a board-certified massage therapist since 2012, focusing on therapeutic massage, stretching, and range of motion.")}
-      {person("MG","Malinda Boyce-Good","Our Team","Malinda brings a lifelong passion for natural wellness, informed by decades of independent study and mentorship in applied kinesiology.")}
+      {person("SC","Dr. Siobhan Conklyn","Chiropractor","Dr. Conklyn provides chiropractic and acupuncture care, with a gentle, respectful approach her patients often mention first.","siobhan-conklyn-2018.jpg")}
+      {person("VR","Valeria Reynolds, LMT","Massage Therapist","With over ten years of experience, Valeria is trained in deep tissue, prenatal, and hot stone massage.","valeria-reynolds-2018.jpg")}
+      {person("JT","John Tango, LMT","Massage Therapist","An Army National Guard veteran, John has been a board-certified massage therapist since 2012, focusing on therapeutic massage, stretching, and range of motion.","john-tango-2018.jpg")}
+      {person("MG","Malinda Boyce-Good","Office Manager","Malinda brings a lifelong passion for natural wellness, informed by decades of independent study and mentorship in applied kinesiology.")}
     </div>
   </div>
 </section>
