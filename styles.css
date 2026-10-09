@@ -369,3 +369,10 @@ fieldset.field { border: 0; padding: 0; margin: 0; }
   html { scroll-behavior: auto; }
   * { transition: none !important; }
 }
+
+/* Brand panel used where a photo isn't available */
+.story-mark {
+  display: grid; place-items: center;
+  background: radial-gradient(circle at 50% 40%, #24406a, var(--navy-deep) 70%);
+}
+.story-mark img { width: auto; height: 72%; object-fit: contain; }

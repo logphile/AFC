@@ -1,8 +1,10 @@
 """Builds the static pages for the AFC preview into the repo folder.
 Shared header/footer live here so every page stays consistent."""
-import pathlib, sys
+import pathlib, sys, hashlib
 
 OUT = pathlib.Path(sys.argv[1])
+# cache-buster: changes whenever the stylesheet or script changes
+VER = hashlib.md5((OUT / "styles.css").read_bytes() + (OUT / "main.js").read_bytes()).hexdigest()[:8]
 IMG = "https://e8usa8896fd.exactdn.com/wp-content/uploads"
 LOGO = "images/logo-mark.svg"
 
@@ -81,7 +83,7 @@ def page(fname, title, desc, body):
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&amp;family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&amp;display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="styles.css?v={VER}">
 </head>
 <body>
 <a class="skip" href="#main">Skip to main content</a>
@@ -137,7 +139,7 @@ def page(fname, title, desc, body):
   <a href="tel:+17578388820">Call Hampton<small>(757) 838-8820</small></a>
   <a href="tel:+18048326705">Call Gloucester<small>(804) 832-6705</small></a>
 </nav>
-<script src="main.js"></script>
+<script src="main.js?v={VER}"></script>
 </body>
 </html>
 '''
@@ -390,7 +392,7 @@ page("about.html", "About Us", "Meet the team at Abbott Family Chiropractic.", f
 
 <section class="section">
   <div class="wrap" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:40px;align-items:center">
-    <div class="hero-photo"><img src="{IMG}/2019/01/contact2-c.jpg?strip=all" alt="Our office"></div>
+    <div class="hero-photo story-mark"><img src="{LOGO}" alt="Abbott Family Chiropractic emblem"></div>
     <div>
       <h2>Our story</h2>
       <p>Our practice opened its Hampton office in January 2006 and added a second office in Gloucester in 2014, so families on both sides of the York River could get care close to home.</p>
